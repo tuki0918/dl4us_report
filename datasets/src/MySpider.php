@@ -75,7 +75,7 @@ class MySpider
         foreach ($entities as $entity) {
 
             try {
-                sleep(3);
+                usleep(500 * 1000);
                 $date_per_count = EntryPageRequest::request($entity->link());
             } catch (Throwable | Exception $e) {
                 var_dump($e);
