@@ -1,0 +1,9 @@
+{
+    "name": "tuki0918/dl4us_report",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}

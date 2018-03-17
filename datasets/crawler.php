@@ -1,14 +1,18 @@
 <?php
 
-require_once __DIR__.'/lib/MyFeedSpider.php';
-require_once __DIR__.'/lib/MyFeedStorage.php';
+date_default_timezone_set('Asia/Tokyo');
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use App\Core\DataSetStorage;
+use App\MySpider;
+
 
 const USER_ID = 'tuki0918';
-const SLEEP_TIME = 3;
-const EXPORT_TSV_FILE = __DIR__ . '/dataset.tsv';
+const SLEEP_TIME = 5;
+const EXPORT_TSV_FILE = __DIR__ . '/../__dataset__.tsv';
 
-$storage = new MyFeedStorage();
-$spider = new MyFeedSpider(USER_ID, $storage);
+$spider = new MySpider(USER_ID, new DataSetStorage());
 
 // クローリング
 $spider->crawling(SLEEP_TIME);

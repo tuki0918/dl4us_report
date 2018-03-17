@@ -1,18 +1,20 @@
 <?php
 
-require_once __DIR__.'/MyFeedEntity.php';
+namespace App\Core;
 
-class MyFeedStorage
+use \SplFileObject;
+
+class DataSetStorage implements StorageInterface
 {
     private $storage = [];
 
     public function __construct(
-        MyFeedEntity ...$data
+        DataSetEntity ...$data
     ) {
         $this->storage = $data;
     }
 
-    public function save(MyFeedEntity $entity): void
+    public function save(DataSetEntity $entity): void
     {
         $this->storage[] = $entity;
     }
@@ -35,6 +37,7 @@ class MyFeedStorage
         $data = [];
         $data[] = [
             'DATE',
+            'URL',
             'TITLE',
             'SCHEME',
             'HOST',
@@ -42,17 +45,19 @@ class MyFeedStorage
             'QUERY',
             'FRAGMENT',
             'BOOKMARK_COUNT',
+            'DATE_PER_COUNT',
         ];
 
         $items = $this->storage();
 
-        /** @var MyFeedEntity $item */
+        /** @var DataSetEntity $item */
         foreach ($items as $item) {
 
             $link = $item->link();
 
             $data[] = [
                 $item->date(),
+                $link,
                 mb_substr($item->title(), 0, 50),
                 parse_url($link, PHP_URL_SCHEME),
                 parse_url($link, PHP_URL_HOST),
@@ -60,6 +65,7 @@ class MyFeedStorage
                 parse_url($link, PHP_URL_QUERY),
                 parse_url($link, PHP_URL_FRAGMENT),
                 $item->bookmarkCount(),
+                $item->datePerCount(),
             ];
         }
 

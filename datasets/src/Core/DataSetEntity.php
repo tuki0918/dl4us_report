@@ -1,6 +1,8 @@
 <?php
 
-class MyFeedEntity
+namespace App\Core;
+
+class DataSetEntity implements EntityInterface
 {
     private $title;
     private $link;
@@ -8,6 +10,7 @@ class MyFeedEntity
     private $dc_creator = '';
     private $dc_date;
     private $bookmark_count = 0;
+    private $date_per_count = 0;
 
     private function __construct(
         string $title,
@@ -15,7 +18,8 @@ class MyFeedEntity
         string $description,
         string $dc_creator,
         string $dc_date,
-        int $bookmark_count
+        int $bookmark_count,
+        int $date_per_count
     ) {
         $this->title = $title;
         $this->link = $link;
@@ -23,6 +27,7 @@ class MyFeedEntity
         $this->dc_creator = $dc_creator;
         $this->dc_date = $dc_date;
         $this->bookmark_count = $bookmark_count;
+        $this->date_per_count = $date_per_count;
     }
 
     public static function create(
@@ -31,7 +36,8 @@ class MyFeedEntity
         string $description,
         string $dc_creator,
         string $dc_date,
-        int $bookmark_count
+        int $bookmark_count,
+        int $date_per_count = 0
     ) {
         return new self(
             $title,
@@ -39,7 +45,8 @@ class MyFeedEntity
             $description,
             $dc_creator,
             $dc_date,
-            $bookmark_count
+            $bookmark_count,
+            $date_per_count
         );
     }
 
@@ -73,5 +80,15 @@ class MyFeedEntity
     public function bookmarkCount(): int
     {
         return $this->bookmark_count;
+    }
+
+    public function datePerCount(): int
+    {
+        return $this->date_per_count;
+    }
+
+    public function setDatePerCount(int $count): void
+    {
+        $this->date_per_count = $count;
     }
 }
